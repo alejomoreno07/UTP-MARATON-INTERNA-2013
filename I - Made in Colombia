@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int n,tempo;
+ 
+void start(){
+    priority_queue< int,vector<int>,greater<int> > q;
+    priority_queue<int> p;
+    long long int ans=0;
+    int t,mediana,left=-1,right=INT_MAX;
+    for(int i=0;i<n;i++){
+        cin>>tempo;
+        if(i==0){
+            t=0;
+            mediana=tempo;
+            ans+=mediana;
+        }
+        else{
+            t++;
+            if(t%2==1){
+                if(tempo<mediana){
+                    p.push(tempo);
+                    q.push(mediana);
+                    mediana=p.top();
+                    ans+=mediana;
+                    p.pop();
+                }
+                else {
+                    q.push(tempo);
+                    ans+=mediana;
+                }
+            }
+            else{
+                if(tempo>mediana){
+                    q.push(tempo);
+                    p.push(mediana);
+                    mediana=q.top();
+                    ans+=mediana;
+                    q.pop();
+                }
+                else{
+                    p.push(tempo);
+                    ans+=mediana;
+                }
+            }
+        }
+ 
+    }
+    cout<<ans/(n*1.0)<<endl;
+}
+ 
+int main(){
+    ios_base::sync_with_stdio(false);
+    cout<<setprecision(2);
+    cout<<fixed;
+    while(cin>>n){
+        if(n==0) return 0;
+        start();
+    }
+    return 0;
+}
