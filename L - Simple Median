@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int n,q,tempo,x,y,T;
+int ans=0;
+vector<int> v;
+ 
+ 
+ 
+ 
+int main(){
+    ios_base::sync_with_stdio(false);
+    cout<<setprecision(1);
+    cout<<fixed;
+    while(cin>>T){
+        if(T==0) return 0;
+        v.clear();
+        for(int i=0;i<T;i++){
+            cin>>n; v.push_back(n);
+        }
+        sort(v.begin(), v.end());
+        if(v.size()%2==0){
+            cout<<(v[(v.size()/2)-1]+v[(v.size()/2)])/2.0<<endl;
+            continue;
+        }
+        else cout<<v[v.size()/2]*1.0<<endl;
+    }
+    return 0;
+}
