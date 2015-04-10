@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+typedef long long lli;
+typedef vector<int> vi;
+ 
+#define Sc(t,v) static_cast<t>(v)
+#define cFor(t,v,c) for(t::const_iterator v=c.begin;v!=c.end;v++)
+ 
+#define ISCOMP(n) (_c[(n)>>5]&(1<<((n)&31)))
+#define SETCOMP(n) _c[(n)>>5]|=(1<<((n)&31))
+ 
+vi primes;
+ 
+namespace Num{
+    const int MAX=1000000;
+    const int MIN=1000;
+    int _c[(MAX>>5)+1];
+ 
+    void primeSieve(){
+        SETCOMP(0); SETCOMP(1);
+        for(int i=3;i<=MIN; i+=2){
+            if(!ISCOMP(i))
+                for(int j=i*i;j<=MAX;j+=i+i) SETCOMP(j);
+        }
+        primes.push_back(2);
+        for(int i=3;i<=MAX;i+=2)
+            if(!ISCOMP(i)) primes.push_back(i);
+    }
+}
+ 
+int bs(int val){
+    int lo=0,hi=primes.size(),mid;
+    while(hi-lo>1){
+        mid=lo+(hi-lo)/2;
+        if(primes[mid]>val) hi=mid;
+        else lo=mid;
+    }
+    return lo;
+}
+ 
+int up(int val){
+    int lo=0,hi=primes.size(),mid;
+    while(hi-lo>1){
+        mid=lo+(hi-lo)/2;
+        if(primes[mid]>val) hi=mid;
+        else lo=mid;
+    }
+    hi=(primes[lo]==val)? lo:hi;
+    return hi;
+}
+ 
+int main(){
+    ios_base::sync_with_stdio(false);
+    Num::primeSieve();
+    int n,m;
+    while(cin>>n>>m){
+        if(n==0 && m==0) break;
+        int lo=up(n),hi=bs(m);
+        int ans=(hi-lo==0)? ((primes[lo]>=n && primes[hi]<=m)? 1:0):hi-lo+1;
+        cout<<ans<<endl;
+    }
+    return 0;
+}
