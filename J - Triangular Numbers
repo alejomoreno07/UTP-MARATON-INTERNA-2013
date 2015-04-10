@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int n,q,tempo,x,y;
+unsigned long long int T;
+//vector<int> v;
+ 
+ 
+ 
+ 
+int main(){
+    ios_base::sync_with_stdio(false);
+    while(cin>>T){
+        if(T==0) return 0;
+        unsigned long long int k=(unsigned long long int)(2*T);
+        unsigned long long int p=sqrt(k);
+        string ans=(((unsigned long long int)(p)*(p+1)==k)? "YES":"NO");
+        cout<<ans<<endl;
+    }
+    return 0;
+}
