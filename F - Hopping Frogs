@@ -1,0 +1,105 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+map< string, int> visited;
+string s,c,final,tempo;
+queue<string> q;
+ 
+void move(string curr){
+    int d[]={-1,-1};
+    int i=0;
+    tempo=curr;
+    for(int k=0;k<curr.size();k++){
+        if(curr.at(k)=='.'){
+            d[i]=k;
+            i++;
+        }
+    }
+    for(i=0;i<2;i++){
+    tempo=curr;
+    if(d[i]+1<curr.size()){
+        if(curr.at(d[i]+1)=='G' || curr.at(d[i]+1)=='R'){
+            tempo.at(d[i])=tempo.at(d[i]+1); tempo.at(d[i]+1)='.';
+            if(visited[tempo]==0) {
+               
+               
+                visited[tempo]=visited[curr]+1;  q.push(tempo);
+             
+            }
+        }
+    }
+    tempo=curr;
+    if(d[i]-1>=0){
+        if(curr.at(d[i]-1)=='R' || curr.at(d[i]-1)=='B'){
+            tempo.at(d[i])=tempo.at(d[i]-1); tempo.at(d[i]-1)='.';
+            if(visited[tempo]==0) {
+               
+               
+                visited[tempo]=visited[curr]+1;
+                q.push(tempo);
+               
+            }
+        }
+    }
+    tempo=curr;
+    if(d[i]+2<curr.size()){
+       
+        if((curr.at(d[i]+2)=='G' || curr.at(d[i]+2)=='R') && curr.at(d[i]+1)!='.'){
+            tempo.at(d[i])=tempo.at(d[i]+2); tempo.at(d[i]+2)='.';
+            if(visited[tempo]==0) {
+               
+               
+                visited[tempo]=visited[curr]+1;
+                q.push(tempo);
+               
+               
+            }
+        }
+    }
+    tempo=curr;
+    if(d[i]-2>=0){
+        if((curr.at(d[i]-2)=='R' || curr.at(d[i]-2)=='B') && curr.at(d[i]-1)!='.'){
+           
+            tempo.at(d[i])=tempo.at(d[i]-2);
+           
+            tempo.at(d[i]-2)='.';
+           
+            if(visited[tempo]==0) {
+               
+                visited[tempo]=visited[curr]+1;
+                q.push(tempo);
+            }
+        }
+    }
+    }
+}
+ 
+int bfs(){
+    q.push(s);
+    visited[s]=1;
+    while(q.size()){
+        c=q.front(); q.pop();
+        if(c==final) return visited[c]-1;
+        move(c);
+    }
+    return -1;
+}
+ 
+void start(){
+    visited.clear();
+    q=queue<string>();
+    cin>>s>>final;
+    int ans=bfs();
+    if(ans!=-1) cout<<ans<<endl;
+    else cout<<"impossible"<<endl;
+}
+ 
+int main(){
+    ios_base::sync_with_stdio(false);
+    int T; cin>>T;
+    for(int i=0;i<T;i++){
+        cout<<"Case "<<i+1<<": ";
+        start();
+    }
+    return 0;
+}
