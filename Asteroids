@@ -1,0 +1,28 @@
+//A- Asteroids
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int T,x,y,a,b,r,sol;
+double dist;
+ 
+void start(){
+    dist=(INT_MAX)*1.0; cin>>x>>y;
+    for(int i=1;i<=T;i++){
+        cin>>a>>b>>r;
+        double aux=sqrt((a-x)*(a-x)+(b-y)*(b-y))-r;
+        if(aux<dist){
+            dist=aux;
+            sol=i;
+        }
+    }
+    cout<<sol<<endl;
+}
+ 
+int main(){
+    ios_base::sync_with_stdio(false);
+    while(cin>>T){
+        if(T==0) return 0;
+        start();
+    }
+    return 0;
+}
