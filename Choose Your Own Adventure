@@ -1,0 +1,71 @@
+//c- Choose Your Own Adventure
+#include <bits/stdc++.h>
+using namespace std;
+ 
+vector< pair<int,int> > mp(5100);
+vector<int> sec(5100);
+map<int, vector<int> > saltos;
+map<int,int> d;
+vector<int> solve;
+int n,a,b,p,q,x;
+ 
+void solver(){
+    solve.clear(); d.clear();
+    int distmax=-1,distmin=INT_MAX;
+    int seccion=sec[x]; int final=mp[seccion].second;
+    queue<int> q;  d[seccion]=final-x+1; q.push(seccion);
+    while(q.size()){
+        int u=q.front(); q.pop();
+        final=mp[u].second;
+        int k=saltos[u].size();
+        //cout<<u<<" "<<k<<" "<<final<<" "<<d[u]<<endl;
+        if(k==0){
+            solve.push_back(d[u]);
+            continue;
+        }
+        for(int i=0;i<k;i++){
+            int to=saltos[u][i];  
+            int dist=mp[to].second-mp[to].first+1;
+            if(d[to]==0){
+                //cout<<"a: "<<to<<" "<<dist<<" "<<u<<" "<<d[u]<<endl;
+                d[to]=dist+d[u];
+                q.push(to);
+            }
+        }
+    }
+    sort(solve.begin(), solve.end());
+    cout<<solve[0]<<" "<<solve.back()<<endl;
+}
+ 
+void start(void){
+    mp.clear(); sec.clear(); saltos.clear();
+    cin>>n;
+    for(int i=0;i<n;i++){
+        cin>>a>>b>>p;
+        for(int j=a;j<=b;j++){
+            sec[j]=i;
+        }
+        mp[i]=make_pair(a,b);
+        if(p!=-1)
+                saltos[p].push_back(i);
+    }
+    cin>>q;
+    for(int i=0;i<q;i++){
+        cin>>x;
+        solver();
+    }
+}
+ 
+ 
+ 
+ 
+int main(void)
+{
+    ios_base::sync_with_stdio(false);
+    int T; cin>>T;
+    for(int i=0;i<T;){
+        cout<<"Case "<<++i<<":"<<endl;
+        start();
+    }
+    return 0;
+}
